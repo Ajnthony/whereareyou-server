@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -11,9 +11,10 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('admin/', admin.site.urls),
+    path('api/', include('animal_api.urls', namespace='animal_api')),
     
     # api docs
-    path('docs-ui/', include_docs_urls(title='WAY - Where Are You')),
+    path('docsui/', include_docs_urls(title='WAY - Where Are You')),
     path('schema/', get_schema_view(
         title='WAY - Where Are You',
         description='WAY API',

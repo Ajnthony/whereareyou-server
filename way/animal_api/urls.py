@@ -5,13 +5,11 @@ from .views import (
     TagViewset,
 )
 
+app_name = 'animal_api'
+
 router = DefaultRouter()
+router.register('animals', AnimalViewset, basename='animal')
+router.register('tags', TagViewset, basename='tags')
 
-router.register('animals',AnimalViewset)
-router.register('tags',TagViewset)
 
-app_name = 'animal'
-
-urlpatterns = [
-    path('', include(router.urls))
-]
+urlpatterns = router.urls

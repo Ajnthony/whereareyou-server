@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions
 from animal.models import (
     Animal,
     Tag,
@@ -21,7 +21,8 @@ class AnimalViewset(viewsets.ModelViewSet):
     
     # authentication
     # authentication_classes = []
-    # permission_classes = []
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          permissions.DjangoModelPermissionsOrAnonReadOnly]
     
     def _params_to_ints(self, queries):
         return [int(str_id) for str_id in queries.split(',')]
@@ -34,14 +35,15 @@ class AnimalViewset(viewsets.ModelViewSet):
             tag_ids = self._params_to_ints(tags)
             queryset = queryset.filter(tags__id__in=tag_ids)
             
-        return queryset.filter(
-            user=self.request.user
-        ).order_by('-id').distinct()
+        # return queryset.filter(
+        #     user=self.request.user
+        # ).order_by('-id').distinct()
+        return queryset
         
     def get_serializer_class(self):
         if self.action == 'list':
             return AnimalSerializer
-        elif self.action == 'upload_image':
+        if self.action == 'upload_image':
             # handle image to be added
             print('Image handling is not implemented yet')
             return False

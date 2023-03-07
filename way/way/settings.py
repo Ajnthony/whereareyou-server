@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
-import environ
 import os
+import environ
 
 env = environ.Env(
     DEBUG=(bool,False,)
@@ -17,7 +17,7 @@ DEBUG = env('DEBUG')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-x0hc-5g4jy7t*-y6r^ut^7)oj7oaj8&gjtn7ov@22*2lg2j^!='
+SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = True
 
@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'animal',
     'animal_api',
-    # 'user',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -109,9 +109,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.User'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': {
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
-    }
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 SIMPLE_JWT = {
