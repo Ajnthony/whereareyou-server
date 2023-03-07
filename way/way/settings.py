@@ -1,5 +1,19 @@
 from pathlib import Path
 from datetime import timedelta
+import environ
+import os
+
+env = environ.Env(
+    DEBUG=(bool,False,)
+)
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+SECRET_KEY = env('SECRET_KEY')
+
+DEBUG = env('DEBUG')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -57,8 +71,11 @@ WSGI_APPLICATION = 'way.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': env('DB_HOST'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
     }
 }
 
@@ -89,7 +106,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'user.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': {
