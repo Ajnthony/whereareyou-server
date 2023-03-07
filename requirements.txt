@@ -1,0 +1,13 @@
+Django
+django-cors-headers
+django-environ
+djangorestframework
+psycopg2
+psycopg2-binary
+flake8
+graphene-django
+django-rest-swagger
+drf-spectacular
+Pillow
+coreapi
+pyyaml
