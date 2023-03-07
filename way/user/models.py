@@ -30,7 +30,7 @@ class UserManager(BaseUserManager):
         if extra_fields.get('is_staff') is not True:
             raise ValueError('superuser must have is_staff: True')
         
-        user = self.create_user(email, **extra_fields)
+        user = self.create_user(email, password, **extra_fields)
         user.save(using=self._db)
         
         return user
@@ -42,8 +42,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    display_name = models.CharField(max_length=30)
-    email = models.EmailField(_('Email address'))
+    display_name = models.CharField(max_length=30, unique=True)
+    email = models.EmailField(_('Email address'), unique=True)
     profile_url = models.ImageField(default=f'https://randomuser.me/api/portraits/{gender}/{random_number}.jpg', null=True)
     bio = models.TextField(max_length=200)
     address = {
