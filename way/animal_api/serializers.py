@@ -28,6 +28,8 @@ class AnimalSerializer(serializers.ModelSerializer):
             'tags',
             'date_created',
             'date_updated',
+            'last_seen_date',
+            'last_seen_location',
             'views',
             'likes'
             ]

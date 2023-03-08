@@ -7,6 +7,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
@@ -46,13 +47,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('Email address'), unique=True)
     profile_url = models.ImageField(default=f'https://randomuser.me/api/portraits/{gender}/{random_number}.jpg', null=True)
     bio = models.TextField(max_length=200)
-    address = {
-        'address_line_1': models.TextField(max_length=50),
-        'address_line_2': models.TimeField(max_length=20, null=True),
-        'state':models.CharField(max_length=2),
-        'country':models.TextField(max_length=20),
-        'zip_code': models.CharField(max_length=5),
-    }
+    address_line_1 = models.TextField(max_length=50)
+    address_line_2 = models.TimeField(max_length=20, null=True)
+    city = models.CharField(max_length=20)
+    state = models.CharField(max_length=2)
+    country = models.TextField(max_length=20)
+    zip_code = models.CharField(max_length=5)
+    date_created = models.DateTimeField(default=timezone.now)
+    date_updated = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True) # email validation later?
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

@@ -13,7 +13,16 @@ from animal_api.serializers import (
     AnimalSerializer,
     AnimalDetailSerializer,
     TagSerializer,
-    )
+)
+
+class CreateAnimalPermission(permissions.BasePermission):
+    message = 'Only the owner of this animal can make changes.'
+    
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        
+        return request.user == obj.owner
 
 class AnimalViewset(viewsets.ModelViewSet):
     serializer_class = AnimalDetailSerializer
@@ -21,8 +30,11 @@ class AnimalViewset(viewsets.ModelViewSet):
     
     # authentication
     # authentication_classes = []
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          permissions.DjangoModelPermissionsOrAnonReadOnly]
+    permission_classes = [
+                        # permissions.IsAuthenticatedOrReadOnly,
+                        #   permissions.DjangoModelPermissionsOrAnonReadOnly,
+                          CreateAnimalPermission
+                          ]
     
     def _params_to_ints(self, queries):
         return [int(str_id) for str_id in queries.split(',')]
