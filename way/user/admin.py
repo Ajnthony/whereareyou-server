@@ -24,6 +24,9 @@ class UserAdmin(BaseUserAdmin):
                 'email',
                 'password1',
                 'password2',
+                'first_name',
+                'last_name',
+                'display_name',
             }
         }),
     )

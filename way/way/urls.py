@@ -1,23 +1,24 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
 )
-from rest_framework.schemas import get_schema_view
-from rest_framework.documentation import include_docs_urls
+
+# admin@way.com
+# admin123456
 
 urlpatterns = [
-    path('api/token/', TokenObtainPairView.as_view(), name='token'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('admin/', admin.site.urls),
-    path('api/', include('animal_api.urls', namespace='animal_api')),
     
-    # api docs
-    path('docsui/', include_docs_urls(title='WAY - Where Are You')),
-    path('schema/', get_schema_view(
-        title='WAY - Where Are You',
-        description='WAY API',
-        version='v1',
-    ), name='openapi-schema')
+    path('api/', include([
+        path('schema/', SpectacularAPIView.as_view(), name='schema'),
+        path('swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+        path('redoc-ui/', SpectacularRedocView.as_view(url_name='schema'), name='redoc-ui'),
+        path('users/', include('user.urls', namespace='user')),
+        
+        # already using 'animals/' and 'tags/'
+        path('', include('animal_api.urls', namespace='animal_api')),
+    ])),
 ]

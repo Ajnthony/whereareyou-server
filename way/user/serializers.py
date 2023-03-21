@@ -29,7 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
         password = validated_data.pop('password', None)
         user = super().update(instance, validated_data)
         
-        if password is not None:
+        if password:
             user.set_password(password)
         
         user.save()    

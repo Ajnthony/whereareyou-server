@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from animal.models import (
+from .models import (
     Animal,
     Tag,
 )
@@ -36,11 +36,10 @@ class AnimalSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
         
     def _get_or_create_tags(self, tags, animal):
-        auth_user = self.context['request'].user
         
         for tag in tags:
             tag_obj, created = Tag.objects.get_or_create(
-                user=auth_user,
+                animal=animal,
                 **tag
             )
             animal.tags.add(tag_obj)
@@ -67,4 +66,4 @@ class AnimalSerializer(serializers.ModelSerializer):
     
 class AnimalDetailSerializer(AnimalSerializer):
     class Meta(AnimalSerializer.Meta):
-        fields = AnimalSerializer.Meta.fields + ['size','last_seen','gender',]
+        fields = AnimalSerializer.Meta.fields + ['size','last_seen_date', 'last_seen_location','gender',]

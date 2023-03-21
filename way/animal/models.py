@@ -17,7 +17,11 @@ class Animal(models.Model):
     species = models.CharField(max_length=20)
     is_found = models.BooleanField(default=False)
     image = models.ImageField(blank=True, default=f'https://source.unsplash.com/random/?{query}')
+    
+    # Tag class doesn't need animal
+    # because of this
     tags = models.ManyToManyField('Tag')
+    
     date_created = models.DateTimeField(default=timezone.now)
     date_updated = models.DateTimeField(default=timezone.now)
     views = models.IntegerField(default=0)
