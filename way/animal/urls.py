@@ -5,7 +5,7 @@ from .views import (
     TagViewset,
 )
 
-app_name = 'animal_api'
+app_name = 'animal'
 
 router = DefaultRouter()
 router.register('animals', AnimalViewset, basename='animal')

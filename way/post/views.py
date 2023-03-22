@@ -24,11 +24,19 @@ class PostWritePermission(BasePermission):
 
         return request.user == obj.user
 
-class PostsListView(generics.ListAPIView):
+class PostsListView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
-    permission_classes = [AllowAny]
-
+    
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            return [AllowAny(),]
+        
+        return [IsAuthenticated(),]
+    
+    def get_queryset(self):
+        queryset = Post.objects.all()
+        return queryset
 
 class PostDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = PostSerializer

@@ -8,7 +8,7 @@ router.register('', CategoryViewset, basename='categories')
 app_name = 'post'
 
 urlpatterns = [
-    path('', PostsListView.as_view(), name='posts-list'),
-    path('', PostDetailView.as_view(), name='post-item'),
-    path('', include(router.urls)),
+    path('posts/', PostsListView.as_view(), name='posts-list'),
+    path('post/<int:pk>/', PostDetailView.as_view(), name='post-item'),
+    path('categories/', include(router.urls)),
 ]

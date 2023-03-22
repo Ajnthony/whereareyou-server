@@ -28,10 +28,10 @@ class Post(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     date_deleted = models.DateTimeField(default=None, null=True, blank=True)
     
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-            super(Post, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.slug:
+    #         self.slug = slugify(self.title)
+    #         super(Post, self).save(*args, **kwargs)
     
     def __str__(self):
         return self.title

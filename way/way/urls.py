@@ -19,6 +19,7 @@ urlpatterns = [
         path('users/', include('user.urls', namespace='user')),
         
         # already using 'animals/' and 'tags/'
-        path('', include('animal_api.urls', namespace='animal_api')),
+        path('', include('animal.urls', namespace='animal')),
+        path('', include('post.urls', namespace='post')),
     ])),
 ]
