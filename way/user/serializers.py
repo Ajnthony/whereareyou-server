@@ -14,13 +14,15 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name',
             'display_name',
             'email',
+            'password',
             'is_active',
             'is_moderator',
             'is_admin',
             'is_staff',
             'is_superuser',
             ]
-        extra_kwargs = {'password':{'write_only':True, 'min_length':6}}
+        extra_kwargs = {'password': {'write_only': True, 'min_length': 6}}
+
         
     def create(self, validated_data):
         return get_user_model().objects.create_user(**validated_data)

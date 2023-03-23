@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError(_('Email is required'))
     

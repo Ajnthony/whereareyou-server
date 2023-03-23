@@ -8,7 +8,7 @@ class AnimalAdmin(admin.ModelAdmin):
     
     fieldsets = (
         (_('Basic info'), {'fields': ('name',)}),
-        (_('Details'), {'fields':('owner','size','gender','description','tags','species','is_found','last_seen_date','last_seen_location',)}),
+        (_('Details'), {'fields':('user','size','gender','description','tags','species','is_found','last_seen_date','last_seen_location',)}),
         (_('Image'), {'fields':('image',)}),
         (_('Meta'), {'fields':('views','likes',)}),
         (_('Dates'), {'fields': ('date_created','date_updated',)}),

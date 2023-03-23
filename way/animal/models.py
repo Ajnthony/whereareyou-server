@@ -7,7 +7,7 @@ class Animal(models.Model):
     animal_types = ['dog','cat','turtle','bird','snake','lizard','animal','pet']
     query = random.choice(animal_types)
     
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     size = models.CharField(max_length=3) # XXL at most...
     last_seen_date = models.DateTimeField(default=timezone.now)

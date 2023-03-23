@@ -29,7 +29,7 @@ class CreateAnimalPermission(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         
-        return request.user == obj.owner
+        return request.user == obj.user
 
 
 @extend_schema_view(
