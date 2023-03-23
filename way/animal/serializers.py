@@ -16,24 +16,16 @@ class AnimalSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Animal
-        # fields = '__all__'
-        fields = [
+        fields = '__all__'
+        read_only_fields = [
             'id',
             'owner',
-            'name',
-            'description',
-            'species',
             'is_found',
-            'image',
-            'tags',
             'date_created',
             'date_updated',
-            'last_seen_date',
-            'last_seen_location',
             'views',
             'likes'
             ]
-        read_only_fields = ['id']
         
     def _get_or_create_tags(self, tags, animal):
         
