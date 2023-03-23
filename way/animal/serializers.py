@@ -19,7 +19,7 @@ class AnimalSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = [
             'id',
-            'owner',
+            'user',
             'name',
             'size',
             'last_seen_date',
@@ -37,7 +37,7 @@ class AnimalSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
             'id',
-            'owner',
+            'user',
             'date_created',
             'date_updated',
             'views',
