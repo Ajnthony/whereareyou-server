@@ -16,11 +16,28 @@ class AnimalSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Animal
-        fields = '__all__'
+        # fields = '__all__'
+        fields = [
+            'id',
+            'owner',
+            'name',
+            'size',
+            'last_seen_date',
+            'last_seen_location',
+            'gender',
+            'description',
+            'species',
+            'is_found',
+            'image',
+            'tags',
+            'date_created',
+            'date_updated',
+            'views',
+            'likes',
+        ]
         read_only_fields = [
             'id',
             'owner',
-            'is_found',
             'date_created',
             'date_updated',
             'views',
@@ -58,4 +75,4 @@ class AnimalSerializer(serializers.ModelSerializer):
     
 class AnimalDetailSerializer(AnimalSerializer):
     class Meta(AnimalSerializer.Meta):
-        fields = AnimalSerializer.Meta.fields + ['size','last_seen_date', 'last_seen_location','gender',]
+        fields = AnimalSerializer.Meta.fields + ['size', 'last_seen_date', 'last_seen_location', 'gender']
