@@ -21,5 +21,6 @@ urlpatterns = [
         # already using 'animals/' and 'tags/'
         path('', include('animal.urls', namespace='animal')),
         path('', include('post.urls', namespace='post')),
+        path('', include('comment.urls', namespace='comment')),
     ])),
 ]
