@@ -91,6 +91,8 @@ class AnimalTests(TestCase):
         url = reverse('animal:animal-detail', args=(other_users_pet.id,))
         res = self.client.patch(url, {'species': 'Dog'})
         
-        
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+        
+        test_res = self.client.get(url)
+        self.assertEqual(test_res.data['species'], 'Cat')
         
