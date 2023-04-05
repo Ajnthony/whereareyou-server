@@ -78,3 +78,20 @@ class PrivatePostApiTests(TestCase):
         res = self.client.patch(url, {'content': 'Updated test post content'})
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(not_my_post.content, 'Test post content')
+        
+class CategoryApiTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        
+    def test_get_only_active_categories(self):
+        create_category() # with default value
+        create_category(name='test-category-2', is_active=False)
+        create_category(name='test-category-3')
+        create_category(name='test-category-4')
+        create_category(name='test-category-5', is_active=False)
+        
+        url = reverse('post:category')
+        res = self.client.get(url)
+        
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data), 3)
