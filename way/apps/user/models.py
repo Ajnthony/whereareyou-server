@@ -1,5 +1,5 @@
+""" User manager and model """
 import random
-from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -7,9 +7,10 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.utils.translation import gettext_lazy as _
-from django.utils import timezone
 
 class UserManager(BaseUserManager):
+    """ User manager """
+    
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError(_('Email is required'))
@@ -38,6 +39,8 @@ class UserManager(BaseUserManager):
         return user
     
 class User(AbstractBaseUser, PermissionsMixin):
+    """ User model """
+    
     # basic info
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -84,3 +87,4 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.profile_url = f'https://randomuser.me/api/portraits/{gender}/{random_number}.jpg'
             
         return super().save(*args, **kwargs)
+    
