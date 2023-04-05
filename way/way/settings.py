@@ -1,13 +1,16 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+import sys
 import environ
 
 env = environ.Env(
     DEBUG=(bool,False,)
 )
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -36,10 +39,10 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'animal',
-    'user',
-    'post',
-    'comment',
+    'apps.animal',
+    'apps.user',
+    'apps.post',
+    'apps.comment',
 ]
 
 MIDDLEWARE = [
