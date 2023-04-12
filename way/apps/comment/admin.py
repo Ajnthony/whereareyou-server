@@ -1,14 +1,15 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from mptt.admin import MPTTModelAdmin
 from .models import Comment
 
 
 
-class CommentAdmin(admin.ModelAdmin):
+class CommentAdmin(MPTTModelAdmin):
     list_display = ('id', 'user', 'post', 'date_created',)
     
     fieldsets = (
-        (_('Basic info'), {'fields': ('user', 'post', 'content', 'likes',)}),
+        (_('Basic info'), {'fields': ('user', 'post', 'parent', 'content', 'likes',)}),
         (_('Details'), {'fields': ('is_flagged', 'is_deleted',)}),
         (_('Dates'), {'fields': ('date_created', 'date_updated', 'date_deleted',)}),
     )

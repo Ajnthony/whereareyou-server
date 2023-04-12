@@ -11,3 +11,4 @@ drf-spectacular
 Pillow
 coreapi
 pyyaml
+django-mptt
