@@ -9,6 +9,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'post',
+            'parent',
             'is_deleted',
             'is_flagged',
             'likes',

@@ -4,16 +4,18 @@ from apps.post.models import Post
 from mptt.models import MPTTModel, TreeForeignKey
 
 class Comment(MPTTModel):
-    # basic fields
+    # relations
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     post = models.ForeignKey(Post, on_delete=models.PROTECT)
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children')
+    
+    # basic info
     content = models.TextField(max_length=1000)
     
     # details
+    likes = models.IntegerField(default=0)
     is_deleted = models.BooleanField(default=False)
     is_flagged = models.BooleanField(default=False)
-    likes = models.IntegerField(default=0)
     
     # dates
     date_created = models.DateTimeField(auto_now_add=True)
